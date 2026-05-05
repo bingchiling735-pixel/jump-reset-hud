@@ -1,5 +1,6 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT' // please update the version as necessary
+    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'maven-publish'
 }
 
 group = 'com.jumpresethud'
@@ -7,18 +8,32 @@ version = '1.0.0'
 archivesBaseName = 'jump-reset-hud'
 
 repositories {
-    maven { url 'https://maven.fabricmc.net/' }
-    maven { url 'https://libraries.minecraft.net/' }
+    mavenCentral()
+    maven { url = 'https://maven.fabricmc.net/' }
 }
 
 dependencies {
     minecraft 'com.mojang:minecraft:1.21.4'
     mappings 'net.fabricmc:yarn:1.21.4+build.5:v2'
-    modCompile 'net.fabricmc:fabric-loader:0.15.11'
+    modImplementation 'net.fabricmc:fabric-loader:0.15.11'
+    modImplementation 'net.fabricmc.fabric-api:fabric-api:0.110.5+1.21.4'
 }
 
-jar {
-    from(sourceSets.main.output) {
-        include 'META-INF/**'
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+    withSourcesJar()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 17
+}
+
+processResources {
+    inputs.property 'version', project.version
+
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
     }
 }
