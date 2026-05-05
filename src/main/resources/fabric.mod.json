@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "jumpresethud",
+  "version": "${version}",
+  "name": "Jump Reset HUD",
+  "description": "Client-side HUD for measuring jump reset timing.",
+  "authors": ["jumpresethud"],
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.jumpresethud.JumpResetHudClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.21.4",
+    "java": ">=17",
+    "fabric-api": "*"
+  }
+}
